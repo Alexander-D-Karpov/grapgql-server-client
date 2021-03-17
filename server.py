@@ -1,4 +1,7 @@
 import socket
+from python_graphql_client import GraphqlClient
+from server_data import endpoint
+
 
 sock = socket.socket()
 sock.bind(('', 7777))
@@ -10,4 +13,21 @@ while True:
     data = conn.recv(1024).decode()
     print(data)
     conn.send('Ok'.encode())
+    id = conn.recv(1024)
     conn.close()
+
+def graphql_con(id):
+    client = GraphqlClient(endpoint)
+    query = """
+    query countryQuery($user_data: String) {
+        user_data(id:$id) {
+            id
+            name
+            role
+        }
+    }
+    """
+    variables = {"id": id}
+
+    data = client.execute(query=query, variables=variables)
+    print(data)
