@@ -1,6 +1,7 @@
 import socket
 from python_graphql_client import GraphqlClient
 from server_data import endpoint
+from log_server_data import *
 
 
 sock = socket.socket()
@@ -31,3 +32,12 @@ def graphql_con(id):
 
     data = client.execute(query=query, variables=variables)
     print(data)
+
+def logserv_con(inf):
+    sock = socket.socket()
+    sock.connect((server_ip, server_port))
+    sock.send('Ok'.encode())
+    data = sock.recv(1024).decode()
+    print(data)
+    sock.send(inf)
+    sock.close()
