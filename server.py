@@ -15,6 +15,7 @@ while True:
     print(data)
     conn.send('Ok'.encode())
     id = conn.recv(1024)
+    garphql_con(id)
     conn.close()
 
 def graphql_con(id):
@@ -32,6 +33,7 @@ def graphql_con(id):
 
     data = client.execute(query=query, variables=variables)
     print(data)
+    logserv_con(data)
 
 def logserv_con(inf):
     sock = socket.socket()
